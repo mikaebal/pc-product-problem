@@ -1,6 +1,40 @@
+# find the biggest product of n numbers next to each other
+# check runs that go left to right and runs that go top to bottom
+# for each row, slide a window of size n and multiply those n numbers
+# for each column, slide a window of size n and multiply those n numbers
+# keep track of the biggest product seen
+# return the biggest product
+
 def largest_product(grid, n):
-    # Your solution here!
-    pass
+    if not grid or not grid[0]:
+        return 0
+
+    row_count = len(grid)
+    col_count = len(grid[0])
+
+    max_product = None
+
+    # check left to right
+    for row in range(row_count):
+        for start_col in range(col_count - n + 1):
+            product = 1
+            for step in range(n):
+                product *= grid[row][start_col + step]
+
+            if max_product is None or product > max_product:
+                max_product = product
+
+    # check top to bottom
+    for col in range(col_count):
+        for start_row in range(row_count - n + 1):
+            product = 1
+            for step in range(n):
+                product *= grid[start_row + step][col]
+
+            if max_product is None or product > max_product:
+                max_product = product
+
+    return max_product
 
 
 grid = [
